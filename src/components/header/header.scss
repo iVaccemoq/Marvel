@@ -1,0 +1,34 @@
+@import '../../style/variables.scss';
+
+.header{
+    height: 137px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    &__wrapper{
+        display: flex;
+        justify-content: space-between;
+    }
+    &__title{
+        color: $dark;
+        font-family: Roboto Condensed;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        span{
+            color: $main-color;
+        }
+    }
+    &__filter{
+        color: #000;
+        font-family: Roboto Condensed;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        span{
+            color: $main-color
+        }
+    }
+    
+}

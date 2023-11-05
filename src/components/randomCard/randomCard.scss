@@ -1,0 +1,43 @@
+@import '../../style/variables.scss';
+
+.card{
+    display: flex;
+    width: 550px;
+    padding: 35px 35px 35px 40px;
+    justify-content: space-between;
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.25);
+    &__img{
+        width: 180px;
+        height: 180px;
+    }
+    &__wrapper{
+        width: 265px;
+    }
+    &__title{
+        color: $dark;
+        font-family: Roboto Condensed;
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    &__descr{
+        color: $dark;
+        font-family: Roboto Condensed;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: 10px;
+        margin-bottom: 13px;
+    }
+    &__button-wrapper{
+        display: flex;
+        a{
+            &:nth-child(1) {
+                margin-right: 30px;
+            }
+        }
+    }
+    
+}

@@ -1,0 +1,25 @@
+.App {
+
+}
+.main{
+    position: relative;
+    &__wrapper{
+        display: flex;
+        
+    }
+    &__heroWrapper{
+        display: flex;
+        justify-content: space-between;
+    }
+    &__decoration{
+        position: absolute;
+        bottom: 0;
+        right: 60px;
+    }
+    &__button{
+        width: 170px;
+        margin-top: 45px;
+        margin-left: 240px;
+        margin-bottom: 45px;
+    }
+}

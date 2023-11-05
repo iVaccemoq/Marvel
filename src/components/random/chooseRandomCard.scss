@@ -1,0 +1,36 @@
+@import '../../style/variables.scss';
+
+.choose{
+    background: $dark;
+    box-shadow: 5px 5px 20px 0px rgba(0, 0, 0, 0.25);
+    width: 550px;
+    height: 250px;
+    padding: 35px 136px 35px 40px;
+    position: relative;
+    &__ques{
+        color: #FFF;
+        font-family: Roboto Condensed;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 33px;
+    }
+    &__another{
+        color: #FFF;
+        font-family: Roboto Condensed;
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 13px;
+    }
+    &__wrapper{
+        width: 101px;
+    }
+    img{
+        position: absolute;
+        bottom: 14px;
+        right: -35px;
+    }
+}
