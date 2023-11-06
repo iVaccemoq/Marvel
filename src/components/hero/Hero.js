@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import Thor from '../../resources/img/Thor.jpg';
-
 class Hero extends Component {
     render() {
+
+        const {name, img, id} = this.props;
         return (
             <li className="heroes__hero">
-                <img src={Thor} alt="hero" />
-                <div className="heroes__name">ABYSS</div>
+                <img src={img} alt="hero" />
+                <div className="heroes__name">{name}</div>
             </li>
         );
     }

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 
 import '../../style/button.scss'
 
+import molot from '../../resources/icons/Decoration.png'
+
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
@@ -17,7 +19,7 @@ class RandomCard extends Component {
 
     marvel = new MarvelService();
 
-    componentDidMount = () => {
+    ContactingTheServer = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         this.marvel.getCharacter(id)
             .then(res => {
@@ -28,6 +30,17 @@ class RandomCard extends Component {
             })
     }
 
+    componentDidMount = () => {
+        this.ContactingTheServer();
+    }
+
+    onTryIt = (e) => {
+        e.preventDefault();
+        this.setState({loading:true})
+        this.ContactingTheServer();
+        this.setState({error:false})
+    }
+
     render() {
         const {char, loading, error} = this.state;
 
@@ -36,11 +49,23 @@ class RandomCard extends Component {
         const view =  !(loading || error) ? <View char={char} /> : null;
 
         return (
-            <div>
+            <div className='wrapper'>
                 {load}
                 {err}
                 {view}
+                <div className='choose'>
+                <div className="choose__ques">Random character for today!
+                    Do you want to get to know him better?</div>
+                    <div className="choose__another">Or choose another one</div>
+                    <div className="choose__wrapper">
+                        <a href="/" className="button button__main" onClick={(e) => this.onTryIt(e)}>
+                            <div className="inner">Try it</div>
+                        </a>
+                    </div>
+                    <img src={molot} alt="alt" />
+                </div>
             </div>
+            
             
         );
     }

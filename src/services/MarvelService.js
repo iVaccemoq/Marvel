@@ -16,8 +16,9 @@ class MarvelService{
         return await res.json();
     }
 
-    getAllCharacters = () => {
-        return this.getResource(`${this._firstPartUrl}?limit=9&${this._secondPartUrl}`)
+    getAllCharacters = async () => {
+        const res = await this.getResource(`${this._firstPartUrl}?limit=9&${this._secondPartUrl}`)
+        return await res.data.results.map(res => this._getState(res))
     }
 
     getCharacter = async (id) => {
@@ -26,13 +27,13 @@ class MarvelService{
     }
 
     _getState = (res) => {
-        console.log(res.description.length)
         const char = {
             name: res.name,
             descr: (res.description ? res.description: 'Нет данных о герое').length > 80 ? (res.description ? res.description: 'Нет данных о герое').slice(0,80) + '...' : (res.description ? res.description: 'Нет данных о герое'),
             img: res.thumbnail.path + '.' + res.thumbnail.extension,
             homepage: res.urls[0].url,
-            wiki: res.urls[1].url
+            wiki: res.urls[1].url,
+            id: res.id
         }
         return char;
     }

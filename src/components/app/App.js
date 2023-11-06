@@ -19,7 +19,7 @@ function App() {
           <Header/>
           <div className="main__wrapper">
             <RandomCard/>
-            <Random/>
+            {/* <Random/> */}
           </div>
           <div className="main__heroWrapper">
             <Heroes/>
