@@ -26,6 +26,11 @@ class MarvelService{
         return this._getState(res.data.results[0]);
     }
 
+    loadMore = async (limit) => {
+        const res = await this.getResource(`${this._firstPartUrl}?limit=${limit}&${this._secondPartUrl}`)
+        return await res.data.results.map(res => this._getState(res))
+    }
+
     _getState = (res) => {
         const char = {
             name: res.name,
@@ -33,7 +38,8 @@ class MarvelService{
             img: res.thumbnail.path + '.' + res.thumbnail.extension,
             homepage: res.urls[0].url,
             wiki: res.urls[1].url,
-            id: res.id
+            id: res.id,
+            comics: res.comics.items
         }
         return char;
     }

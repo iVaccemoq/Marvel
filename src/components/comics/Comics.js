@@ -4,8 +4,9 @@ import './comics.scss'
 
 class Comics extends Component {
     render() {
+        
         return (
-            <li className="comics">All-Winners Squad: Band of Heroes (2011) #3</li>
+            <li className="comics">{this.props.comics}</li>
         );
     }
 }
