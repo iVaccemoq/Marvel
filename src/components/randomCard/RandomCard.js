@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import '../../style/button.scss'
 
@@ -9,66 +9,62 @@ import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
 
 import './randomCard.scss'
-class RandomCard extends Component {
+const RandomCard = () => {
 
-    state = {
-        char: {},
-        loading: true,
-        error: false
-    }
+    const [char, setChar] = useState({})
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
 
-    marvel = new MarvelService();
+    const marvel = new MarvelService();
 
-    ContactingTheServer = () => {
+    const ContactingTheServer = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        this.marvel.getCharacter(id)
+        marvel.getCharacter(id)
             .then(res => {
-                this.setState({char:res, loading:false})
+                setChar(res);
+                setLoading(false);
             })
             .catch(res => {
-                this.setState({error:true, loading:false})
+                setError(true);
+                setLoading(false);
             })
     }
 
-    componentDidMount = () => {
-        this.ContactingTheServer();
-    }
+    useEffect(() => {
+        ContactingTheServer();
+    }, [])
 
-    onTryIt = (e) => {
+    const onTryIt = (e) => {
         e.preventDefault();
-        this.setState({loading:true})
-        this.ContactingTheServer();
-        this.setState({error:false})
+        setLoading(true);
+        ContactingTheServer();
+        setError(false);
     }
 
-    render() {
-        const {char, loading, error} = this.state;
+    const load = loading ? <Spinner/> : null;
+    const err = error ? <Error/> : null;
+    const view =  !(loading || error) ? <View char={char} /> : null;
 
-        const load = loading ? <Spinner/> : null;
-        const err = error ? <Error/> : null;
-        const view =  !(loading || error) ? <View char={char} /> : null;
-
-        return (
-            <div className='wrapper'>
-                {load}
-                {err}
-                {view}
-                <div className='choose'>
-                <div className="choose__ques">Random character for today!
-                    Do you want to get to know him better?</div>
-                    <div className="choose__another">Or choose another one</div>
-                    <div className="choose__wrapper">
-                        <a href="/" className="button button__main" onClick={(e) => this.onTryIt(e)}>
-                            <div className="inner">Try it</div>
-                        </a>
-                    </div>
-                    <img src={molot} alt="alt" />
+    return (
+        <div className='wrapper'>
+            {load}
+            {err}
+            {view}
+            <div className='choose'>
+            <div className="choose__ques">Random character for today!
+                Do you want to get to know him better?</div>
+                <div className="choose__another">Or choose another one</div>
+                <div className="choose__wrapper">
+                    <a href="/" className="button button__main" onClick={(e) => onTryIt(e)}>
+                        <div className="inner">Try it</div>
+                    </a>
                 </div>
+                <img src={molot} alt="alt" />
             </div>
-            
-            
-        );
-    }
+        </div>
+        
+        
+    );
 }
 
 const View = (props) => {

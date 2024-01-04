@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import MarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
@@ -8,73 +8,102 @@ import './heroes.scss'
 
 import Hero from '../hero/Hero';
 
-class Heroes extends Component {
-    state = {
-        char:[],
-        error: false,
-        loading: true,
-        limit: 12,
-        loadingMore: false
+const Heroes = (props) => {
+    
+    const [char, setChar] = useState([]);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [limit, setLimit] = useState(12);
+    const [loadingMore, setLoadingMore] = useState(false);
+    const [charsInfo, setCharsInfo] = useState([])
+    const [active, setActive] = useState([])
+
+    const onClazz = (e) => {
+        char.map((item,i) => {
+            if (item.id == e.target.getAttribute(['data-id'])){
+                const element = i;
+                const newChars = char.map((item,j) => {
+                    if (element === j) { 
+                        return true          
+                    } else {    
+                        return null           
+                    }
+                })
+                setActive(newChars)
+            }
+            
+        })
     }
 
-    componentDidMount = () => {
+    useEffect(() => {
         const heroes = new MarvelService();
+        let arr = [];
         heroes.getAllCharacters()
             .then(res => {
-                const heroesArr = res.map(item => (
-                    <Hero name={item.name} img={item.img} key={item.id} id={item.id} characterId={this.props.characterId}/>
-                ));
-                this.setState({ char: heroesArr, loading: false});
+                setChar(res);
+                setLoading(false);
+                setCharsInfo(arr);
             })
             .catch(res => {
-                this.setState({ error: true, loading: false})
+                setError(true);
+                setLoading(false);
             })
-    }
+    },[])
+    
+    const onLoadMore = (e) => {
 
-    onLoadMore = (e) => {
         e.preventDefault();
 
-        this.setState({ limit: this.state.limit + 3, loadingMore: true })
+        setLimit(limit => limit + 3);
+        setLoadingMore(true);
 
         const heroes = new MarvelService();
-
-        heroes.loadMore(this.state.limit)
+        let arr = [];
+        
+        heroes.loadMore(limit)
             .then(res => {
-                const heroesArr = res.map(item => (
-                    <Hero name={item.name} img={item.img} key={item.id} id={item.id} characterId={this.props.characterId}/>
-                ));
-                this.setState({ char: heroesArr, loadingMore: false});
+                arr = res
+
+                setChar(res);
+                setLoadingMore(false);
+                setCharsInfo(arr)
             })
             .catch(res => {
-                this.setState({ error: true, loadingMore: false})
+                
+                setError(true);
+                setLoadingMore(false)
             })
 
     }
 
-    render() {
-        const {loading,error,char, loadingMore} = this.state;
+    const load = loading ? <Spinner/> : null;
+    const err = error ? <Error/> : null;
+    const chars = !(error || loading) ? char : null;
+    const button = !(error || loading) ? <AddChar onLoadMore={(e) => onLoadMore(e)}/> : null;
+    const loadMore = loadingMore ? <Spinner/> : null;
 
-        const load = loading ? <Spinner/> : null;
-        const err = error ? <Error/> : null;
-        const chars = !(error || loading) ? char : null;
-        const button = !(error || loading) ? <AddChar onLoadMore={(e) => this.onLoadMore(e)}/> : null;
-        const loadMore = loadingMore ? <Spinner/> : null;
-
-        return (
-            <div className="">
-                <ol className='heroes'>
-                    {load}
-                    {err}
-                    {chars}
-                </ol>
-                <div className="main__button">
-                    {loadMore}  
-                    {button}          
-                </div>
+    return (
+        
+        <div className="">
+            <ol className='heroes'>
+                {load}
+                {err}
+                {char.map((item,i) => {
+                    if (active[i] === true) {
+                        return <Hero onClazz={onClazz} active={true} name={item.name} img={item.img} key={item.id} id={item.id} characterId={props.characterId}/>
+                    } else {
+                        return <Hero onClazz={onClazz} active={null} name={item.name} img={item.img} key={item.id} id={item.id} characterId={props.characterId}/>
+                    }
+                })}
+            </ol>
+            <div className="main__button">
+                {loadMore}  
+                {button}          
             </div>
-            
-        );
-    }
+        </div>
+        
+    );
+    
 }
 
 const AddChar = ({onLoadMore}) => {

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './heroInformation.scss'
 
@@ -9,49 +9,43 @@ import MarvelService from '../../services/MarvelService';
 import Skeleton from '../skeleton/Skeleton';
 
 
-class HeroInformation extends Component {
+const HeroInformation = (props) => {
 
-    state = {
-        char: false,
-        error: false,
-        loading: false
-    }
+    const [char, setChar] = useState(false);
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    componentDidMount() {
-        this.onUpdate()
-    }
+    
 
-    marvelService = new MarvelService();
+    const marvelService = new MarvelService();
 
-    onUpdate = () => {
-        if (!this.props.characterId) {
+    const onUpdate = () => {
+        if (!props.characterId) {
             return
         }
 
-        this.setState({loading: true})
+        setLoading(true);
         
-        this.marvelService.getCharacter(this.props.characterId)
+        marvelService.getCharacter(props.characterId)
             .then(res => {
-    
-                return this.setState({char: res, loading: false})
+                setChar(res)
+                setLoading(false)
+                
             })
             .catch(res => {
-                
-                return this.setState({error: true, loading: false})
+                setError(true)
+                setLoading(false)
             } )
     }
+    
+    useEffect(() => {
+        onUpdate();
+    },[])
 
-    componentDidUpdate(p) {
+    useEffect(() => {
+        onUpdate();
+    },[props.characterId])
 
-        if (this.props.characterId !== p.characterId) {
-            this.onUpdate();
-        }
-        
-    }
-
-    render() {
-        
-        const {char, loading, error} = this.state;
 
         const load = loading ? <Spinner/> : null;
         const err = error ? <Error/> : null;
@@ -59,14 +53,13 @@ class HeroInformation extends Component {
         const skeleton = char || loading || error ? null : <Skeleton/>
 
         return (
-            <div className='heroName' onClick={this.onUpdate}>
+            <div className='heroName'>
                 {load}
                 {err}
                 {skeleton}
                 {view}
             </div>
         );
-    }
     
 }
 

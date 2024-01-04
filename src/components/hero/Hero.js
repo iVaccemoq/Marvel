@@ -1,20 +1,27 @@
-import React, { Component } from 'react';
 
-class Hero extends Component {
-    render() {
+const Hero = ({name, img, characterId, id, onClazz,active,}) => {
 
-        const {name, img, characterId, id} = this.props;
-        
-        return (
-            <li 
-            key={id}
-            className="heroes__hero"
-            onClick={() => characterId(id)}>
-                <img src={img} alt="hero" />
-                <div className="heroes__name">{name}</div>
-            </li>
-        );
+    let clazz = "heroes__hero"
+
+    if (active) {
+        clazz += ' heroes__selected'
     }
+
+    return ( 
+        <li 
+        data-id={id}
+        key={id}
+        className={clazz}
+        onClick={(e) => {
+            characterId(id)
+            onClazz(e)
+        }}
+        >
+            <img src={img} alt="hero" data-id={id}/>
+            <div className="heroes__name" data-id={id}>{name}</div>
+        </li>
+    );
+    
 }
 
 export default Hero;
