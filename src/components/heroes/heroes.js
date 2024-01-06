@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
 
@@ -11,12 +11,12 @@ import Hero from '../hero/Hero';
 const Heroes = (props) => {
     
     const [char, setChar] = useState([]);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
     const [limit, setLimit] = useState(12);
     const [loadingMore, setLoadingMore] = useState(false);
     const [charsInfo, setCharsInfo] = useState([])
     const [active, setActive] = useState([])
+
+    const {loading,error,getAllCharacters,loadMore} = useMarvelService();
 
     const onClazz = (e) => {
         char.map((item,i) => {
@@ -36,17 +36,15 @@ const Heroes = (props) => {
     }
 
     useEffect(() => {
-        const heroes = new MarvelService();
+        
         let arr = [];
-        heroes.getAllCharacters()
+        getAllCharacters()
             .then(res => {
                 setChar(res);
-                setLoading(false);
                 setCharsInfo(arr);
             })
             .catch(res => {
-                setError(true);
-                setLoading(false);
+                
             })
     },[])
     
@@ -56,11 +54,10 @@ const Heroes = (props) => {
 
         setLimit(limit => limit + 3);
         setLoadingMore(true);
-
-        const heroes = new MarvelService();
+        
         let arr = [];
         
-        heroes.loadMore(limit)
+        loadMore(limit)
             .then(res => {
                 arr = res
 
@@ -69,8 +66,6 @@ const Heroes = (props) => {
                 setCharsInfo(arr)
             })
             .catch(res => {
-                
-                setError(true);
                 setLoadingMore(false)
             })
 
@@ -80,7 +75,7 @@ const Heroes = (props) => {
     const err = error ? <Error/> : null;
     const chars = !(error || loading) ? char : null;
     const button = !(error || loading) ? <AddChar onLoadMore={(e) => onLoadMore(e)}/> : null;
-    const loadMore = loadingMore ? <Spinner/> : null;
+    const loadMoreChar = loadingMore ? <Spinner/> : null;
 
     return (
         
@@ -97,7 +92,7 @@ const Heroes = (props) => {
                 })}
             </ol>
             <div className="main__button">
-                {loadMore}  
+                {loadMoreChar}  
                 {button}          
             </div>
         </div>

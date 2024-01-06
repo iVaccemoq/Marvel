@@ -1,37 +1,42 @@
+import { useHttp } from "../hooks/http.hook";
 
+const useMarvelService = () => {
 
-class MarvelService{
+    const {loading, request, error, clearError, comicsRequest} = useHttp();
 
-    _firstPartUrl = 'https://gateway.marvel.com:443/v1/public/characters';
-    _secondPartUrl = 'apikey=b67ab1d35c15d867c96d86041443af32';
-    _id = '1011400';
+    const _firstPartUrl = 'https://gateway.marvel.com:443/v1/public/characters';
+    const _secondPartUrl = 'apikey=b67ab1d35c15d867c96d86041443af32';
+    const _id = '1011400';
 
-    getResource = async (url) => {
-        let res = await fetch(url);
+    const url = 'https://gateway.marvel.com:443/v1/public/comics?limit=8&apikey=b67ab1d35c15d867c96d86041443af32'
+    const _firstPartComicsURL = 'https://gateway.marvel.com:443/v1/public/comics';
+    const _secondPartComicsURL = 'apikey=b67ab1d35c15d867c96d86041443af32'
 
-        if (!res.ok) {
-            throw new Error ('Ошибка')
-        }
-
-        return await res.json();
+    const getAllCharacters = async () => {
+        const res = await request(`${_firstPartUrl}?limit=9&${_secondPartUrl}`)
+        return await res.data.results.map(res => _getState(res))
     }
 
-    getAllCharacters = async () => {
-        const res = await this.getResource(`${this._firstPartUrl}?limit=9&${this._secondPartUrl}`)
-        return await res.data.results.map(res => this._getState(res))
+    const getCharacter = async (id) => {
+        const res = await request(`${_firstPartUrl}/${id}?${_secondPartUrl}`)
+        return _getState(res.data.results[0]);
     }
 
-    getCharacter = async (id) => {
-        const res = await this.getResource(`${this._firstPartUrl}/${id}?${this._secondPartUrl}`)
-        return this._getState(res.data.results[0]);
+    const loadMore = async (limit) => {
+        const res = await request(`${_firstPartUrl}?limit=${limit}&${_secondPartUrl}`)
+        return await res.data.results.map(res => _getState(res))
     }
 
-    loadMore = async (limit) => {
-        const res = await this.getResource(`${this._firstPartUrl}?limit=${limit}&${this._secondPartUrl}`)
-        return await res.data.results.map(res => this._getState(res))
+    const getComicses = async () => {
+        const res = await comicsRequest(`${_firstPartComicsURL}?limit=8&${_secondPartComicsURL}`);
+        return await res;
     }
 
-    _getState = (res) => {
+    const loadMoreComicses = async () => {
+
+    }
+
+    const _getState = (res) => {
         const char = {
             name: res.name,
             descr: (res.description ? res.description: 'Нет данных о герое').length > 80 ? (res.description ? res.description: 'Нет данных о герое').slice(0,80) + '...' : (res.description ? res.description: 'Нет данных о герое'),
@@ -43,6 +48,8 @@ class MarvelService{
         }
         return char;
     }
+
+    return {getAllCharacters,getCharacter,loadMore,loading,error, clearError, getComicses}
 }
 
-export default MarvelService;
+export default useMarvelService;

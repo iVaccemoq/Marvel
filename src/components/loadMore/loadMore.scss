@@ -1,0 +1,22 @@
+.loadMore {
+    width: 170px;
+    height: 38px;
+    flex-shrink: 0;
+    background: #9F0013;
+    color: #FFF;
+    font-family: Roboto Condensed;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: uppercase;
+    border: none;
+    margin: 0 auto;
+    margin-bottom: 40px;
+    transition: 0.3s;
+    &:hover{
+        background: #66020d;
+        transform: translateY(-7px);
+    }
+    
+}

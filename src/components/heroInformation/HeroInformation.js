@@ -5,37 +5,27 @@ import './heroInformation.scss'
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
 import Comics from '../comics/Comics';
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Skeleton from '../skeleton/Skeleton';
 
 
 const HeroInformation = (props) => {
 
     const [char, setChar] = useState(false);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(false);
-
     
-
-    const marvelService = new MarvelService();
+    const {error, loading, getCharacter} = useMarvelService();
 
     const onUpdate = () => {
         if (!props.characterId) {
             return
         }
-
-        setLoading(true);
         
-        marvelService.getCharacter(props.characterId)
+       getCharacter(props.characterId)
             .then(res => {
                 setChar(res)
-                setLoading(false)
+               
                 
             })
-            .catch(res => {
-                setError(true)
-                setLoading(false)
-            } )
     }
     
     useEffect(() => {

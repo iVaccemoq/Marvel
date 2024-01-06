@@ -1,0 +1,34 @@
+.comicses {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    column-gap: 66px;
+    row-gap: 55px;
+    &__wrapper{
+        width: 225px;
+    }
+    &__img{
+        width: 100%;
+        height: 346px;
+        margin-bottom: 10px;
+    }
+    &__title{
+        color: #000;
+        font-family: Roboto Condensed;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    &__cost{
+        color: rgba(0, 0, 0, 0.60);
+        font-family: Roboto Condensed;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-top: 5px;
+    }
+}

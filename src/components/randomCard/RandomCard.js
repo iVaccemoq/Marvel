@@ -4,7 +4,7 @@ import '../../style/button.scss'
 
 import molot from '../../resources/icons/Decoration.png'
 
-import MarvelService from '../../services/MarvelService';
+import useMarvelService from '../../services/MarvelService';
 import Spinner from '../spinner/Spinner';
 import Error from '../error/Error';
 
@@ -12,21 +12,16 @@ import './randomCard.scss'
 const RandomCard = () => {
 
     const [char, setChar] = useState({})
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(false)
 
-    const marvel = new MarvelService();
+    const {loading, error, getCharacter, clearError} = useMarvelService();
 
     const ContactingTheServer = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
-        marvel.getCharacter(id)
+        getCharacter(id)
             .then(res => {
-                setChar(res);
-                setLoading(false);
+                setChar(res);               
             })
-            .catch(res => {
-                setError(true);
-                setLoading(false);
+            .catch(res => {                
             })
     }
 
@@ -36,9 +31,10 @@ const RandomCard = () => {
 
     const onTryIt = (e) => {
         e.preventDefault();
-        setLoading(true);
+        
         ContactingTheServer();
-        setError(false);
+        clearError();
+
     }
 
     const load = loading ? <Spinner/> : null;

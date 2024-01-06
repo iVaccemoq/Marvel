@@ -5,6 +5,7 @@ import molot from '../../resources/icons/Decoration.png'
 import RandomCard from '../randomCard/RandomCard';
 
 const Random = () => {
+    
     const Card = new RandomCard();
     return (
         <div className='choose'>
