@@ -1,0 +1,26 @@
+.singleHero {
+    display: flex;
+    column-gap: 50px;
+    margin-top: 50px;
+    &__img{
+        width: 293px;
+        height: 293px;
+    }
+    &__title{
+        color: #000;
+        font-family: "Roboto Condensed";
+        font-size: 22px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+    }
+    &__descr{
+        color: #000;
+        font-family: "Roboto Condensed";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-top: 25px;
+    }
+}

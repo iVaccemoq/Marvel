@@ -1,5 +1,6 @@
 .App {
-
+    margin: 0 auto;
+    width: 1100px;
 }
 .main{
     position: relative;
@@ -14,7 +15,7 @@
     &__decoration{
         position: absolute;
         bottom: 0;
-        right: 60px;
+        right: -400px;
     }
     &__button{
         width: 170px;

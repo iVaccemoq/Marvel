@@ -3,51 +3,51 @@ import './App.scss';
 
 import { useState } from 'react';
 
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
+
 import Header from '../header/Header';
-import RandomCard from '../randomCard/RandomCard';
-import Random from '../random/ChooseRandomCard';
-import Heroes from '../heroes/heroes';
-import HeroInformation from '../heroInformation/HeroInformation';
-import MarvelService from '../../services/MarvelService';
-import ComicsWrapper from '../comicsWrapper/ComicsWrapper';
-import LoadMore from '../loadMore/LoadMore';
+import ComicsPage from '../pages/ComicsPage';
+import MainPage from '../pages/MainPage';
+import Page404 from '../pages/404';
+import DynamicPage from '../pages/SingleComicPage';
+import SingleComic from '../singleComic/SingleComic';
+import useMarvelService from '../../services/MarvelService';
+import SingleHero from '../singleHero/SingleHero';
 
 import '../../style/container.scss'
 
-import decoration from '../../resources/img/vision.png'
-
 const App = () => {
 
-  const [characterId, setCharacterId] = useState(null);
+  const [comicInfo, setComicInfo] = useState(null)
 
-  const OncharacterId = (id) => {
-    setCharacterId(id);
+  const {getComic,loading, getCharacter} = useMarvelService();
+
+  const getComicInfo = (comicInfo) => {
+    setComicInfo(comicInfo)
   }
 
 
 
   return (
-    <div className='App'>
-      <main className='main'>
-        {/* <div className="container">
-          <Header/>
-          <div className="main__wrapper">
-            <RandomCard/>
-          </div>
-          <div className="main__heroWrapper">
-            <Heroes characterId={OncharacterId}/>
-            <HeroInformation characterId={characterId} />
-          </div>
-          
-        </div>
-        <img className="main__decoration" src={decoration} alt="vision"/> */}
-        <div className="container">
-          <Header/>
-          <ComicsWrapper/>
-          {/* <LoadMore/> */}
-        </div>
-      </main>
-    </div>
+    <Router>
+      <div className='App'>
+        <Header/>
+        <main className='main'>
+
+          <Routes>
+
+            <Route path='/' element={<MainPage/>} />
+            <Route path='/comics' element={<ComicsPage/>}/>
+            <Route path='*' element={<Page404/>}/>
+            <Route path='/comics/:id' element={<DynamicPage getInfo={getComic} loading={loading} getComicInfo={getComicInfo} ><SingleComic comicsInfo={comicInfo}/></DynamicPage>}/>
+            <Route path='/heroes/:id' element={<DynamicPage getInfo={getCharacter} loading={loading} getComicInfo={getComicInfo} ><SingleHero heroesInfo={comicInfo}/></DynamicPage>}/>
+          </Routes>          
+          <Link to={`/heroes/${1010903}`} className="comicses__wrapper">click me</Link>
+        </main>
+      </div>
+    </Router>
   );
   
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import '../../style/button.scss'
 
@@ -65,25 +66,32 @@ const RandomCard = () => {
 
 const View = (props) => {
     const {img,name,descr,homepage,wiki} = props.char;
+    const [randomCardLoaded,setRandomCardLoaded] = useState(false);
+
+    useEffect(() => {
+        setRandomCardLoaded(true)
+    })
 
     return (
-        <div className='card'> 
-            <div className="">
-                <img className='card__img' src={img} alt="Thor" />
-            </div>
-            <div className="card__wrapper">
-                <div className="card__title">{name}</div>
-                <p className="card__descr">{descr}</p>
-                <div className="card__button-wrapper">
-                    <a href={homepage} className="button button__main">
-                        <div className="inner">homepage</div>
-                    </a>
-                    <a href={wiki} className="button button__secondary">
-                        <div className="inner">Wiki</div>
-                    </a>
+        <CSSTransition in={randomCardLoaded} timeout={1000} classNames='char'>
+            <div className='card'> 
+                <div className="">
+                    <img className='card__img' src={img} alt="Thor" />
+                </div>
+                <div className="card__wrapper">
+                    <div className="card__title">{name}</div>
+                    <p className="card__descr">{descr}</p>
+                    <div className="card__button-wrapper">
+                        <a href={homepage} className="button button__main">
+                            <div className="inner">homepage</div>
+                        </a>
+                        <a href={wiki} className="button button__secondary">
+                            <div className="inner">Wiki</div>
+                        </a>
+                    </div>
                 </div>
             </div>
-        </div>
+        </CSSTransition>
     )
 }
 

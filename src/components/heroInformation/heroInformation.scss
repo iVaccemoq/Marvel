@@ -1,10 +1,11 @@
 .heroName{
     width: 425px;
-    min-height: 763px;
+    height: 100%;
     background: #FFF;
     box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.25);
     padding: 25px 25px 24px 25px;
     margin-top: 50px;
+    position: relative;
     &__avatar{
         display: flex;
         width: 276px;

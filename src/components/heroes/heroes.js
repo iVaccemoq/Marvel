@@ -6,6 +6,7 @@ import Error from '../error/Error';
 
 import './heroes.scss'
 
+
 import Hero from '../hero/Hero';
 
 const Heroes = (props) => {
@@ -13,7 +14,7 @@ const Heroes = (props) => {
     const [char, setChar] = useState([]);
     const [limit, setLimit] = useState(12);
     const [loadingMore, setLoadingMore] = useState(false);
-    const [charsInfo, setCharsInfo] = useState([])
+
     const [active, setActive] = useState([])
 
     const {loading,error,getAllCharacters,loadMore} = useMarvelService();
@@ -35,13 +36,16 @@ const Heroes = (props) => {
         })
     }
 
+
+
     useEffect(() => {
         
-        let arr = [];
+
         getAllCharacters()
             .then(res => {
                 setChar(res);
-                setCharsInfo(arr);
+                
+                
             })
             .catch(res => {
                 
@@ -55,15 +59,13 @@ const Heroes = (props) => {
         setLimit(limit => limit + 3);
         setLoadingMore(true);
         
-        let arr = [];
+
         
         loadMore(limit)
             .then(res => {
-                arr = res
-
                 setChar(res);
                 setLoadingMore(false);
-                setCharsInfo(arr)
+                
             })
             .catch(res => {
                 setLoadingMore(false)
@@ -73,10 +75,8 @@ const Heroes = (props) => {
 
     const load = loading ? <Spinner/> : null;
     const err = error ? <Error/> : null;
-    const chars = !(error || loading) ? char : null;
     const button = !(error || loading) ? <AddChar onLoadMore={(e) => onLoadMore(e)}/> : null;
     const loadMoreChar = loadingMore ? <Spinner/> : null;
-
     return (
         
         <div className="">

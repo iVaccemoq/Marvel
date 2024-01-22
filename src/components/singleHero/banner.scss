@@ -1,0 +1,19 @@
+.baner {
+    height: 100px;
+    padding-left: 45px;
+    padding-right: 25px;
+    background: #232222;
+    display: flex;
+    align-items: center;
+    &__text{
+        width: 250px;
+        color: #FFF;
+        font-family: "Roboto Condensed";
+        font-size: 24px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-left: 83px;
+        margin-right: 427px;
+    }
+}

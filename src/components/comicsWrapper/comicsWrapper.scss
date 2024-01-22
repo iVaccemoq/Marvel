@@ -6,8 +6,15 @@
     list-style: none;
     column-gap: 66px;
     row-gap: 55px;
+    margin-top: 45px;
     &__wrapper{
         width: 225px;
+        cursor: pointer;
+        transition: 0.3s all;
+        &:hover{
+            transform: translateY(-10px);
+            text-decoration: none;
+        }
     }
     &__img{
         width: 100%;
@@ -31,4 +38,5 @@
         line-height: normal;
         margin-top: 5px;
     }
+    
 }

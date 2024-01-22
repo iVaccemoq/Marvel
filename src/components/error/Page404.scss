@@ -1,0 +1,21 @@
+.notFound{
+    background: url('../../resources/img/404.jpg') center center/cover no-repeat;
+    height: 650px;
+    position: relative;
+    &__link{
+        position: absolute;
+        color: red;
+        font-family: Roboto Condensed;
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        bottom: -70px;
+        right: 50%;
+        transform: translateX(50%);
+        &:hover{
+            color: red;
+
+        }
+    }
+}

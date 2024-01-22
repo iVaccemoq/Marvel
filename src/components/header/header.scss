@@ -15,8 +15,15 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        span{
-            color: $main-color;
+        a{
+            span{
+                color: $main-color;
+            }
+            color: #000;
+            &:hover{
+                color: #000;
+                text-decoration: none;
+            }
         }
     }
     &__filter{
@@ -26,8 +33,17 @@
         font-style: normal;
         font-weight: 700;
         line-height: normal;
-        span{
-            color: $main-color
+    }
+    &__char{
+        color: #000;
+        &:hover{
+            color: #000;
+        }
+    }
+    &__comics{
+        color: $main-color;
+        &:hover{
+            color: $main-color;
         }
     }
     

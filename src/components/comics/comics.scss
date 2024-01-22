@@ -1,12 +1,19 @@
 .comics{
     width: 375px;
-    height: 25px;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    color: #000;
-    margin-bottom: 10px;
-    font-family: Roboto Condensed;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    height: 30px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: flex-start;
+    a{
+        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        color: #000;
+        margin-bottom: 10px;
+        font-family: Roboto Condensed;
+        font-size: 14px;
+        font-weight: 400;
+
+        &:hover{
+            color: #000;
+        }
+    }
 }

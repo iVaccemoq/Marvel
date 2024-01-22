@@ -34,7 +34,7 @@ export const useHttp = () => {
             return data;
         } catch(e) {
             setLoading(true);
-            setError(e.message)
+            setError(true)
         }
     }
 
