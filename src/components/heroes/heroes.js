@@ -73,7 +73,7 @@ const Heroes = (props) => {
 
     }
 
-    const load = loading ? <Spinner/> : null;
+    const load = loading && !loadingMore ? <Spinner/> : null;
     const err = error ? <Error/> : null;
     const button = !(error || loading) ? <AddChar onLoadMore={(e) => onLoadMore(e)}/> : null;
     const loadMoreChar = loadingMore ? <Spinner/> : null;

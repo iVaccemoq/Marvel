@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const ComicsPrototype = ({img,title,cost,id}) => {
 
-    if (cost == 0) {
+    if (cost === 0) {
         cost = 'NOT AVAILABLE'
     } 
 

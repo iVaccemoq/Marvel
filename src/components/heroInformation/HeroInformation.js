@@ -28,7 +28,6 @@ const HeroInformation = (props) => {
             })
     }
     
-console.log(char)
     useEffect(() => {
         onUpdate();
     },[props.characterId])

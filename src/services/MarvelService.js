@@ -6,14 +6,12 @@ const useMarvelService = () => {
 
     const _firstPartUrl = 'https://gateway.marvel.com:443/v1/public/characters';
     const _secondPartUrl = 'apikey=b67ab1d35c15d867c96d86041443af32';
-    const _id = '1011400';
 
-    const url = 'https://gateway.marvel.com:443/v1/public/comics?limit=8&apikey=b67ab1d35c15d867c96d86041443af32'
     const _firstPartComicsURL = 'https://gateway.marvel.com:443/v1/public/comics';
     const _secondPartComicsURL = 'apikey=b67ab1d35c15d867c96d86041443af32'
 
-    const getAllCharacters = async () => {
-        const res = await request(`${_firstPartUrl}?limit=9&${_secondPartUrl}`)
+    const getAllCharacters = async (limit = 9) => {
+        const res = await request(`${_firstPartUrl}?limit=${limit}&${_secondPartUrl}`)
         return await res.data.results.map(res => _getState(res))
     }
 
@@ -54,19 +52,6 @@ const useMarvelService = () => {
         }
         return char;
     }
-
-    /* const _getComic = (res) => {
-        const char = {
-            name: res.name,
-            descr: (res.description ? res.description: 'Нет данных о герое').length > 80 ? (res.description ? res.description: 'Нет данных о герое').slice(0,80) + '...' : (res.description ? res.description: 'Нет данных о герое'),
-            img: res.thumbnail.path + '.' + res.thumbnail.extension,
-            homepage: res.urls[0].url,
-            wiki: res.urls[1].url,
-            id: res.id,
-            comics: res.comics.items
-        }
-        return char;
-    } */
 
     return {getAllCharacters,getCharacter,loadMore,loading,error, clearError, getComicses, loadMoreComicses, getComic}
 }

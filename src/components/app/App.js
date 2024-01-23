@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import { Link } from 'react-router-dom';
 
 import Header from '../header/Header';
 import ComicsPage from '../pages/ComicsPage';
@@ -37,14 +36,13 @@ const App = () => {
         <main className='main'>
 
           <Routes>
-
             <Route path='/' element={<MainPage/>} />
             <Route path='/comics' element={<ComicsPage/>}/>
             <Route path='*' element={<Page404/>}/>
             <Route path='/comics/:id' element={<DynamicPage getInfo={getComic} loading={loading} getComicInfo={getComicInfo} ><SingleComic comicsInfo={comicInfo}/></DynamicPage>}/>
             <Route path='/heroes/:id' element={<DynamicPage getInfo={getCharacter} loading={loading} getComicInfo={getComicInfo} ><SingleHero heroesInfo={comicInfo}/></DynamicPage>}/>
-          </Routes>          
-          <Link to={`/heroes/${1010903}`} className="comicses__wrapper">click me</Link>
+          </Routes>   
+
         </main>
       </div>
     </Router>
